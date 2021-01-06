@@ -5,6 +5,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import 'react-day-picker/lib/style.css';
 
 import { FiClock, FiPower } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -144,7 +145,7 @@ const Dashboard: React.FC = () => {
 
             <div>
               <span>Ben-vindo(a),</span>
-              <strong>{user.name}</strong>
+              <Link to="/profile">{user.name}</Link>
             </div>
           </Profile>
 
