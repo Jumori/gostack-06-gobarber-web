@@ -29,8 +29,6 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
       try {
-        setLoading(true);
-
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -42,6 +40,8 @@ const ForgotPassword: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
+        setLoading(true);
 
         await api.post('/password/forgot', {
           email: data.email,

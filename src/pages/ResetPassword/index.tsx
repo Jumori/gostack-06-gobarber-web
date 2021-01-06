@@ -33,11 +33,12 @@ const ResetPassword: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: ResetPasswordFormData) => {
       try {
-        setLoading(true);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          password: Yup.string().required('Senha obrigatória'),
+          password: Yup.string()
+            .min(6, 'No mínimo 6 dígitos')
+            .required('Senha obrigatória'),
           password_confirmation: Yup.string().oneOf(
             [Yup.ref('password'), undefined],
             'Confirmação incorreta',
@@ -55,10 +56,17 @@ const ResetPassword: React.FC = () => {
           throw new Error();
         }
 
+        setLoading(true);
+
         await api.post('/password/reset', {
           password,
           password_confirmation,
           token,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Senha resetada com sucesso!',
         });
 
         history.push('/');
